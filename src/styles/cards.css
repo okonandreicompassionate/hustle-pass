@@ -1,0 +1,309 @@
+@import './tokens.css';
+
+/* Shared card shell — section 4: all 320 x 500, flex column, overflow hidden */
+.card {
+  width: 320px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-ui);
+}
+
+.card-skills {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 14px;
+}
+.card-status { margin-top: 6px; }
+.card-status-dot { font-size: 15px; line-height: 1; }
+
+/* ================= 4.1 Danfo ================= */
+.card--danfo {
+  background: var(--danfo);
+  border-radius: 6px;
+  padding: 18px 20px 20px;
+}
+.danfo-plate {
+  display: inline-flex;
+  align-self: flex-start;
+  border: 2.5px solid var(--ink);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+.danfo-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 76px;
+  line-height: 0.88;
+  margin-top: 22px;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.danfo-name-band {
+  background: var(--ink);
+  color: var(--danfo);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 30px;
+  line-height: 0.95;
+  margin: 20px -20px 0;
+  padding: 14px 20px;
+  position: relative;
+}
+.danfo-photo {
+  position: absolute;
+  right: 20px;
+  top: -34px;
+  width: 84px;
+  height: 84px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.danfo-status { color: var(--ink); }
+.danfo-body { flex: 1; display: flex; flex-direction: column; }
+.danfo-buttons {
+  margin-top: auto;
+  padding-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ================= 4.2 Receipt ================= */
+.card--receipt {
+  background: var(--paper);
+  padding: 22px 22px 36px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+}
+.receipt-heading {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-align: center;
+  border-bottom: 2px dashed var(--ink);
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+.receipt-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 14px;
+}
+.receipt-row + .receipt-row { margin-top: 6px; }
+.receipt-rows { margin-top: 8px; }
+.receipt-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.receipt-leader {
+  flex: 1;
+  border-bottom: 2px dotted #6B6F76;
+  height: 0;
+  transform: translateY(-4px);
+}
+.receipt-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  text-align: right;
+}
+.receipt-stamp {
+  position: absolute;
+  right: 18px;
+  top: 196px;
+  transform: rotate(-9deg);
+  border: 3px solid var(--lagoon-deep);
+  color: var(--lagoon-deep);
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.receipt-body { flex: 1; display: flex; flex-direction: column; }
+.receipt-barcode {
+  height: 34px;
+  margin: auto 0 10px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 2px,
+    transparent 2px 5px,
+    var(--ink) 5px 6px,
+    transparent 6px 10px,
+    var(--ink) 10px 13px,
+    transparent 13px 15px
+  );
+}
+.receipt-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ================= 4.3 Lagos ID ================= */
+.card--id {
+  background: #fff;
+  border-radius: 14px;
+  border: 2px solid var(--lagoon-deep);
+}
+.id-header {
+  background: var(--lagoon-deep);
+  color: #fff;
+  padding: 12px 18px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.id-body {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-image: repeating-linear-gradient(135deg, transparent 0 14px, var(--lagoon-tint) 14px 16px);
+}
+.id-top-row {
+  display: flex;
+  gap: 14px;
+}
+.id-photo {
+  width: 104px;
+  height: 124px;
+  flex-shrink: 0;
+  background: var(--lagoon-tint);
+  border: 2px solid var(--lagoon-deep);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.id-fields { display: flex; flex-direction: column; min-width: 0; }
+.id-field-label {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--lagoon-deep);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+.id-field-label:first-child { margin-top: 0; }
+.id-field-value {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.id-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 34px;
+  line-height: 1;
+  margin: 16px 0 4px;
+  color: var(--ink);
+}
+.id-buttons {
+  margin-top: auto;
+  padding-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ================= 4.4 Midnight ================= */
+.card--midnight {
+  background: var(--ink);
+  border-radius: 28px;
+  padding: 24px;
+  color: #fff;
+}
+.midnight-orb {
+  position: absolute;
+  right: -70px;
+  top: -70px;
+  width: 250px;
+  height: 250px;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--danfo) 0, #F6B91A55 40%, transparent 70%);
+  pointer-events: none;
+}
+.midnight-body { position: relative; flex: 1; display: flex; flex-direction: column; }
+.midnight-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  border: 1px solid #ffffff55;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.midnight-name {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-top: auto;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.midnight-title {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--danfo);
+}
+.midnight-skills {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--muted-on-dark);
+  border-top: 1px solid #ffffff2e;
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.midnight-row {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.midnight-link {
+  color: var(--paper);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 14px;
+}

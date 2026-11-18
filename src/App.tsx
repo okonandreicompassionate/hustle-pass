@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { HustlePassData } from './types';
-import { LandingView } from './components/LandingView';
-import { BuilderView } from './components/BuilderView';
-import { PublicView } from './components/PublicView';
+import { LandingView } from './screens/LandingView';
+import { BuilderView } from './screens/BuilderView';
+import { PublicView } from './screens/PublicView';
+import { ShareView } from './screens/ShareView';
 import { decodePassFromHash, getStoredPasses } from './utils/hustleUtils';
 
-type ViewState = 'landing' | 'builder' | 'public';
+type ViewState = 'landing' | 'builder' | 'public' | 'share';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<ViewState>('landing');
@@ -13,11 +14,8 @@ export default function App() {
   const [storedPasses, setStoredPasses] = useState<HustlePassData[]>([]);
 
   useEffect(() => {
-    // Check localStorage
-    const passes = getStoredPasses();
-    setStoredPasses(passes);
+    setStoredPasses(getStoredPasses());
 
-    // Check URL hash for shared pass
     const hash = window.location.hash;
     if (hash && hash.startsWith('#pass=')) {
       const decoded = decodePassFromHash(hash);
@@ -27,7 +25,6 @@ export default function App() {
       }
     }
 
-    // Listen to hash changes
     const handleHashChange = () => {
       const newHash = window.location.hash;
       if (newHash && newHash.startsWith('#pass=')) {
@@ -43,29 +40,21 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleSelectPass = (pass: HustlePassData) => {
-    setActivePass(pass);
-    window.location.hash = `pass=${btoa(encodeURIComponent(JSON.stringify(pass)))}`;
-    setCurrentView('public');
-  };
-
   const handleVouchUpdated = (updatedVouches: HustlePassData['vouches']) => {
     if (activePass) {
-      const updated = { ...activePass, vouches: updatedVouches };
-      setActivePass(updated);
+      setActivePass({ ...activePass, vouches: updatedVouches });
     }
   };
 
   return (
-    <div>
+    <>
       {currentView === 'landing' && (
         <LandingView
+          storedPasses={storedPasses}
           onStartBuilding={() => {
             setActivePass(null);
             setCurrentView('builder');
           }}
-          onSelectPass={handleSelectPass}
-          storedPasses={storedPasses}
         />
       )}
 
@@ -78,10 +67,7 @@ export default function App() {
             window.location.hash = `pass=${btoa(encodeURIComponent(JSON.stringify(pass)))}`;
             setCurrentView('public');
           }}
-          onBack={() => {
-            setCurrentView('landing');
-            window.location.hash = '';
-          }}
+          onBack={() => setCurrentView('landing')}
         />
       )}
 
@@ -97,9 +83,14 @@ export default function App() {
             setCurrentView('builder');
             window.location.hash = '';
           }}
+          onShare={() => setCurrentView('share')}
           onVouchUpdated={handleVouchUpdated}
         />
       )}
-    </div>
+
+      {currentView === 'share' && activePass && (
+        <ShareView pass={activePass} onBack={() => setCurrentView('public')} />
+      )}
+    </>
   );
 }

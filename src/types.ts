@@ -1,6 +1,12 @@
-export type ThemeType = 'danfo' | 'nepa' | 'lagos_id' | 'lekki';
+export type ThemeType = 'danfo' | 'receipt' | 'id' | 'midnight';
 
-export type StatusType = 'Open to Work' | 'Taking Gigs' | 'Employed' | 'Japa Mode' | 'Busy Cooking';
+export type StatusType = 'open' | 'gigs' | 'employed';
+
+export const STATUS_LABEL: Record<StatusType, string> = {
+  open: 'Open to work',
+  gigs: 'Taking gigs',
+  employed: 'Employed',
+};
 
 export interface Vouch {
   id: string;
@@ -11,17 +17,15 @@ export interface Vouch {
 
 export interface HustlePassData {
   id: string;
+  handle: string;
   name: string;
   jobTitle: string;
-  photoUrl: string;
-  skills: string[]; // exactly 3 skills
+  photo: string;
+  skills: [string, string, string];
   status: StatusType;
-  whatsapp: string; // e.g. 2348012345678
-  cvLink: string;
-  linkedinUrl?: string;
+  whatsapp: string; // e.g. 2348012345678, no '+'
+  cvUrl: string;
   theme: ThemeType;
-  bio?: string;
-  location?: string;
   vouches: Vouch[];
   createdAt: string;
 }

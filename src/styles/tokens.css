@@ -1,0 +1,19 @@
+/* Hustle Pass — canonical design tokens. Never hard-code a hex that isn't here. */
+:root {
+  --ink: #0B0C0E;
+  --paper: #F4F1EA;
+  --paper-2: #E9E4D8;
+  --danfo: #F6B91A;
+  --lagoon: #19A974;
+  --lagoon-deep: #0F7A55;
+  --lagoon-tint: #DDEFE6;
+  --signal: #E5484D;
+  --mist: #9AA1AC;
+  --muted-on-dark: #B7BCC5;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --font-display: 'Anton', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
