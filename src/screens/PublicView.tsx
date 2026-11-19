@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HustlePassData, STATUS_LABEL, ThemeType } from '../types';
-import { formatWhatsAppUrl } from '../utils/hustleUtils';
+import { formatWhatsAppUrl, getPassShareUrl } from '../utils/hustleUtils';
 import { ArrowLeftIcon, QrIcon, ShareIcon } from '../components/icons';
 import { PhotoImg } from '../components/PhotoImg';
 import { QRCodeSVG } from 'qrcode.react';
@@ -38,7 +38,7 @@ export const PublicView: React.FC<PublicViewProps> = ({ pass, onBackToHome, onCr
   const [toast, setToast] = useState('');
   const [showQR, setShowQR] = useState(false);
   const p = PALETTE[pass.theme];
-  const shareUrl = `${window.location.origin}${window.location.pathname}#pass=${btoa(encodeURIComponent(JSON.stringify(pass)))}`;
+  const shareUrl = getPassShareUrl(pass);
 
   const flashToast = (msg: string) => {
     setToast(msg);

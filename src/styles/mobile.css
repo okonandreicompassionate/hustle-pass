@@ -380,11 +380,38 @@
 .share-art-heading strong { font-weight: 400; }
 .share-art-card {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 10px;
   flex: 1;
   min-height: 0;
 }
-.share-art-card .card { box-shadow: 0 6px 18px #0b0c0e33; }
+.share-art-card-preview { width: 190px; flex: 0 1 190px; min-width: 0; }
+.share-art-card-preview .card { box-shadow: 0 6px 18px #0b0c0e33; }
+.share-art .danfo-buttons,
+.share-art .receipt-buttons,
+.share-art .id-buttons,
+.share-art .midnight-row { display: none; }
+.share-art-qr {
+  flex: 0 0 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.share-art-qr svg { display: block; width: 100%; height: auto; }
+.share-art-qr span {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  white-space: nowrap;
+}
 .share-art-footer {
   display: flex;
   justify-content: space-between;
@@ -400,7 +427,10 @@
   line-height: 0.9;
   margin: 8px 0 6px;
 }
-.share-art--post .share-art-card { align-items: center; }
+.share-art--post .share-art-card { align-items: center; gap: 6px; }
+.share-art--post .share-art-card-preview { width: 116px; flex-basis: 116px; }
+.share-art--post .share-art-qr { flex-basis: 84px; padding: 4px; gap: 3px; }
+.share-art--post .share-art-qr span { font-size: 6px; }
 .share-art--post .share-art-footer {
   font-size: 7px;
   padding-top: 6px;

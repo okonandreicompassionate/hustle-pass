@@ -5,6 +5,8 @@ import { ThemeCard } from '../components/cards/ThemeCard';
 import { ScaledCard } from '../components/cards/ScaledCard';
 import { Logo } from '../components/Logo';
 import { ArrowLeftIcon } from '../components/icons';
+import { getPassShareUrl } from '../utils/hustleUtils';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface ShareViewProps {
   pass: HustlePassData;
@@ -18,8 +20,9 @@ type ArtworkFormat = 'story' | 'post';
 const ShareArtwork: React.FC<{
   pass: HustlePassData;
   format: ArtworkFormat;
+  shareUrl: string;
   innerRef?: React.Ref<HTMLDivElement>;
-}> = ({ pass, format, innerRef }) => (
+}> = ({ pass, format, shareUrl, innerRef }) => (
   <div ref={innerRef} className={`share-art share-art--${format}`}>
     <div className="share-art-top">
       <div className="share-art-brand"><Logo size={24} /><span>Hustle Pass</span></div>
@@ -30,9 +33,15 @@ const ShareArtwork: React.FC<{
       <strong>THE HUSTLE.</strong>
     </div>
     <div className="share-art-card">
-      <ScaledCard maxWidth={format === 'story' ? 256 : 150}>
-        <ThemeCard pass={pass} />
-      </ScaledCard>
+      <div className="share-art-card-preview">
+        <ScaledCard maxWidth={format === 'story' ? 190 : 116}>
+          <ThemeCard pass={pass} />
+        </ScaledCard>
+      </div>
+      <div className="share-art-qr">
+        <QRCodeSVG value={shareUrl} size={format === 'story' ? 92 : 78} level="M" includeMargin />
+        <span>SCAN TO OPEN</span>
+      </div>
     </div>
     <div className="share-art-footer">
       <span>YOUR HUSTLE. ONE LINK.</span>
@@ -47,8 +56,8 @@ export const ShareView: React.FC<ShareViewProps> = ({ pass, onBack }) => {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const exportRef = useRef<HTMLDivElement>(null);
-  const shareUrl = `${window.location.origin}${window.location.pathname}#pass=${btoa(encodeURIComponent(JSON.stringify(pass)))}`;
-  const linkDisplay = `hustlepass.link/${pass.handle}`;
+  const shareUrl = getPassShareUrl(pass);
+  const linkDisplay = shareUrl.replace(/^https?:\/\//, '');
   const artworkFormat: ArtworkFormat = tab === 'post' ? 'post' : 'story';
 
   const handleSaveImage = async () => {
@@ -101,7 +110,7 @@ export const ShareView: React.FC<ShareViewProps> = ({ pass, onBack }) => {
       {tab !== 'link' ? (
         <div className="share-preview-wrap">
           <div className={`share-preview share-preview--${artworkFormat}`}>
-            <ShareArtwork pass={pass} format={artworkFormat} />
+            <ShareArtwork pass={pass} format={artworkFormat} shareUrl={shareUrl} />
           </div>
         </div>
       ) : (
@@ -115,7 +124,7 @@ export const ShareView: React.FC<ShareViewProps> = ({ pass, onBack }) => {
       )}
 
       <div className="share-art-export" aria-hidden="true">
-        <ShareArtwork pass={pass} format={artworkFormat} innerRef={exportRef} />
+        <ShareArtwork pass={pass} format={artworkFormat} shareUrl={shareUrl} innerRef={exportRef} />
       </div>
 
       <div className="share-buttons">

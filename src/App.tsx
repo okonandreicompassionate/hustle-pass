@@ -4,7 +4,7 @@ import { LandingView } from './screens/LandingView';
 import { BuilderView } from './screens/BuilderView';
 import { PublicView } from './screens/PublicView';
 import { ShareView } from './screens/ShareView';
-import { decodePassFromHash, getStoredPasses } from './utils/hustleUtils';
+import { decodePassFromHash, encodePassToHash, getStoredPasses } from './utils/hustleUtils';
 
 type ViewState = 'landing' | 'builder' | 'public' | 'share';
 
@@ -16,23 +16,17 @@ export default function App() {
   useEffect(() => {
     setStoredPasses(getStoredPasses());
 
-    const hash = window.location.hash;
-    if (hash && hash.startsWith('#pass=')) {
-      const decoded = decodePassFromHash(hash);
-      if (decoded) {
-        setActivePass(decoded);
-        setCurrentView('public');
-      }
+    const decoded = decodePassFromHash(window.location.hash);
+    if (decoded) {
+      setActivePass(decoded);
+      setCurrentView('public');
     }
 
     const handleHashChange = () => {
-      const newHash = window.location.hash;
-      if (newHash && newHash.startsWith('#pass=')) {
-        const decoded = decodePassFromHash(newHash);
-        if (decoded) {
-          setActivePass(decoded);
-          setCurrentView('public');
-        }
+      const decoded = decodePassFromHash(window.location.hash);
+      if (decoded) {
+        setActivePass(decoded);
+        setCurrentView('public');
       }
     };
 
@@ -64,7 +58,7 @@ export default function App() {
           onFinish={(pass) => {
             setActivePass(pass);
             setStoredPasses(getStoredPasses());
-            window.location.hash = `pass=${btoa(encodeURIComponent(JSON.stringify(pass)))}`;
+            window.location.hash = encodePassToHash(pass).slice(1);
             setCurrentView('public');
           }}
           onBack={() => setCurrentView('landing')}
